@@ -2,14 +2,14 @@
 #include "Exception.h"
 
 Picture::Picture(std::string pictureDataFilePath)
+	: pointsColors(200, vector<Point>(200))
 {
 	LoadPictureData(pictureDataFilePath);
 }
 
 Picture::~Picture()
 {
-	pointsColors->clear();
-	delete pointsColors;
+
 }
 
 void Picture::LoadPictureData(std::string pictureDataFilePath)
@@ -27,19 +27,17 @@ void Picture::LoadPictureData(std::string pictureDataFilePath)
 	auto resolutionData = Explode(loadedLine, '\t');
 
 	resolution = { stoi(resolutionData[0]), stoi(resolutionData[1]) };
-	pointsCount = resolution.width * resolution.height;
 	
-	pointsColors = new vector<vector<int>>(pointsCount, vector<int>(3));
-
-	for (int i = 0; i < pointsCount; i++)
+	for (int x = 0; x < resolution.width; x++)
 	{
-		getline(inputFile, loadedLine);
-		
-		auto pointData = Explode(loadedLine, '\t');
-
-		for (int j = 0; j < 3; j++)
+		for (int y = 0; y < resolution.height; y++)
 		{
-			(*pointsColors)[i][j] = stoi(pointData[j]);
+			getline(inputFile, loadedLine);
+			auto pointData = Explode(loadedLine, '\t');
+		
+			pointsColors[x][y].red = stoi(pointData[0]);
+			pointsColors[x][y].green = stoi(pointData[1]);
+			pointsColors[x][y].blue = stoi(pointData[2]);
 		}
 	}
 
