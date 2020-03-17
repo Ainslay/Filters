@@ -21,9 +21,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\zd3.txt" />
@@ -32,10 +29,7 @@
     <ClInclude Include="src\Picture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
+    <ClInclude Include="src\Filters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
