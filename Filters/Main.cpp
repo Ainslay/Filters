@@ -3,7 +3,6 @@
 #include <GL\freeglut.h>
 #include <iostream>
 
-
 #include "src\Picture.h"
 #include "src\Exception.h"
 
