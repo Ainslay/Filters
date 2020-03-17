@@ -1,5 +1,5 @@
 #include "Picture.h"
-#include "Exception.h"
+#include <iostream>
 
 Picture::Picture(std::string pictureDataFilePath)
 	: pointsColors(200, vector<Point>(200))
@@ -18,7 +18,8 @@ void Picture::LoadPictureData(std::string pictureDataFilePath)
 
 	if (!inputFile.good())
 	{
-		throw Exception(10, "Could not open input file.");
+		cerr << "Could not open input file." << endl;
+		exit(-10);
 	}
 
 	std::string loadedLine;
