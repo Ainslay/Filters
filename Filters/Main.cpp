@@ -21,30 +21,24 @@ int main(int argc, char* argv[]) {
 
 	// Initialize GLUT
 	glutInit(&argc, argv);
-	// Set up some memory buffers for our display
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	// Set the window size
 	glutInitWindowSize(800, 600);
-	// Create the window with the title "Hello,GL"
-	glutCreateWindow("Hello, GL");
+	glutCreateWindow("Filters");
+
 	// Bind the two functions (above) to respond when necessary
 	glutReshapeFunc(changeViewPort);
 	glutDisplayFunc(render);
 
-	// Very important!  This initializes the entry points in the OpenGL driver so we can 
-	// call all the functions in the API.
-	GLenum err = glewInit();
-
-	if (GLEW_OK != err) {
+	if (GLEW_OK != glewInit()) {
 		fprintf(stderr, "GLEW error");
 		return 1;
 	}
-
+	
 	try
 	{
-		Picture picture("res/zad3.txt");
+		Picture picture("res/zd3.txt");
 	}
-	catch (Exception& ex)
+	catch (Exception ex)
 	{
 		ex.PrintInfo();
 		exit(ex.GetErrorCode());

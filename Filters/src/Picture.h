@@ -12,14 +12,17 @@ struct Resolution
 	int height;
 };
 
+struct Point
+{
+	int red, green, blue;
+};
+
 class Picture
 {
-private:
-	Resolution resolution;
-	vector<vector<int>>* pointsColors;
-	int pointsCount;
-
 public:
+	Resolution resolution;
+	vector<vector<Point>> pointsColors;
+
 	Picture() = delete;
 	Picture(string pictureDataFilePath);
 	~Picture();
