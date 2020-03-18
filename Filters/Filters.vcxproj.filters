@@ -21,6 +21,9 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Filter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\zd3.txt" />
@@ -29,7 +32,7 @@
     <ClInclude Include="src\Picture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Filters.h">
+    <ClInclude Include="src\Filter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

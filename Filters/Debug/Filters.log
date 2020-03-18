@@ -1,10 +1,2 @@
 ﻿  Main.cpp
-F:\Studia\Grafika\Filters\Filters\src\Filters.h(47,101): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-F:\Studia\Grafika\Filters\Filters\src\Filters.h(55,41): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-F:\Studia\Grafika\Filters\Filters\src\Filters.h(77,105): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-F:\Studia\Grafika\Filters\Filters\src\Filters.h(85,43): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-F:\Studia\Grafika\Filters\Filters\src\Filters.h(107,103): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-F:\Studia\Grafika\Filters\Filters\src\Filters.h(115,42): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  Picture.cpp
-  Generating Code...
   Filters.vcxproj -> F:\Studia\Grafika\Filters\Debug\Filters.exe

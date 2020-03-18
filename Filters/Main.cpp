@@ -4,9 +4,13 @@
 #include <iostream>
 
 #include "src\Picture.h"
-#include "src\Filters.h"
+#include "src\Filter.h"
 
 Picture picture("res/zd3.txt");
+
+Filter highPass({ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 });
+Filter lowPass({ -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0 });
+Filter edge({ 0.0, -1.0, 0.0, -1.0, 4.0, -1.0, 0.0, -1.0, 0.0 });
 
 void ChangeViewPort(int width, int height)
 {
@@ -23,20 +27,22 @@ void ChangeViewPort(int width, int height)
 void Menu()
 {
 	system("cls");
-	cout << "Change brightness: [+] / [-]\n";
-	cout << "Change gamma: [F] / [G]\n";
-	cout << "Change red channel: [Q] / [W]\n";
-	cout << "Change green channel: [A] / [S]\n";
-	cout << "Change blue channel: [Z] / [X]\n";
-	cout << "Restore the picture: [R]\n";
-	cout << "Filters:\n";
-	cout << "High pass filter: [1]\n";
-	cout << "Low pass filter: [2]\n";
-	cout << "Edge filter: [3]\n";
-	cout << "Exit: [E]\n\n";
+	cout << " ---=== Controls ===---\n";
+	cout << " Change brightness:    [+]/[-]\n";
+	cout << " Change gamma:         [F]/[G]\n";
+	cout << " Change red channel:   [Q]/[W]\n";
+	cout << " Change green channel: [A]/[S]\n";
+	cout << " Change blue channel:  [Z]/[X]\n";
+	cout << "\n ---=== Filters ===---\n";
+	cout << " High pass filter: [1]\n";
+	cout << " Low pass filter:  [2]\n";
+	cout << " Edge filter:      [3]\n";
+	cout << "\n Restore the picture: [R]\n";
+	cout << " Exit: [E]\n\n";
 
-	cout << "Brightness: " << brightness << " Gamma: " << gamma << endl;
-	cout << "R: " << red_filter << " G: " << green_filter << " B: " << blue_filter << endl;
+	cout << " ---=== Image info ===---\n";
+	cout << " Brightness: " << Filter::brightness << " Gamma: " << Filter::gamma << endl;
+	cout << " R: " << Filter::red_filter << " G: " << Filter::green_filter << " B: " << Filter::blue_filter << endl;
 }
 
 void Render()
@@ -49,9 +55,10 @@ void Render()
 	{
         for (int j = -(picture.resolution.height)/2, l = 0; j < picture.resolution.height/2 && l<picture.resolution.height; j++, l++)
 		{
-            glColor3d(pow(picture.pointsColors[k][l].red/255.0+brightness+red_filter/255.0, 1.0/gamma),
-					  pow(picture.pointsColors[k][l].green/255.0+brightness+green_filter/255.0, 1.0/gamma),
-                      pow(picture.pointsColors[k][l].blue/255.0+brightness+blue_filter/255.0, 1.0/gamma));
+            glColor3d(pow(picture.pointsColors[k][l].red   /255.0 + Filter::brightness + Filter::red_filter   /255.0, 1.0 / Filter::gamma),
+					  pow(picture.pointsColors[k][l].green /255.0 + Filter::brightness + Filter::green_filter /255.0, 1.0 / Filter::gamma),
+                      pow(picture.pointsColors[k][l].blue  /255.0 + Filter::brightness + Filter::blue_filter  /255.0, 1.0 / Filter::gamma)
+					 );
             glVertex2d(j, i);
         }
     }
@@ -65,118 +72,28 @@ void Key(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 'q':
-	{
-		if(red_filter < 255)
-			red_filter += 5;
-	}
-		break;
-	case 'w':
-	{
-		if (red_filter > 0)
-			red_filter -= 5;
-	}
-		break;
-	case 'a':
-	{
-		if(green_filter < 255)
-			green_filter += 5;
-	}
-		break;
-	case 's':
-	{
-		if (green_filter > 0)
-			green_filter -= 5;
-	}
-		break;
-	case 'z':
-	{
-		if (blue_filter < 255)
-			blue_filter += 5;
-	}
-		break;
-	case 'x':
-	{
-		if (blue_filter > 0)
-			blue_filter -= 5;
-	}
-		break;
-	case 'f':
-	{
-		if(gamma < 1.0)
-			gamma += 0.02;
-	}
-		break;
-	case 'g':
-		if (gamma > -1.0)
-			gamma -= 0.02;
-		break;
-	case '+':
-	{
-		if (brightness < 1.0)
-			brightness += 0.02;
-	}
-		break;
-	case '-':
-	{
-		if (brightness > -1.0)
-			brightness -= 0.02;
-	}
-		break;
-	case 'r':
-		{
-			ClearFilters(picture);
-			cout << "Restored default picture" << endl;
-		}
-		break;
-	case 'e':
-		exit(0);
-		break;
-	case '1':
-		for (int i = 0; i < 9; i++)
-		{
-			mask[i] = 1;
-		}
+		case 'q': Filter::ChangeRedChannel(-5);   break;
+		case 'w': Filter::ChangeRedChannel(5);    break;
 
-		ChangeRedChannel(picture);
-		ChangeGreenChannel(picture);
-		ChangeBlueChannel(picture);
-		cout << "Filtr dolnoprzepustowy wlaczony" << endl;
-		break;
+		case 'a': Filter::ChangeGreenChannel(-5); break;
+		case 's': Filter::ChangeGreenChannel(5);  break;
 
-	case '2':
-		mask[0] = -1;
-		mask[1] = -1;
-		mask[2] = -1;
-		mask[3] = -1;
-		mask[4] = -1;
-		mask[5] = -1;
-		mask[6] = -1;
-		mask[7] = -1;
-		mask[8] = -1;
+		case 'z': Filter::ChangeBlueChannel(-5);  break;
+		case 'x': Filter::ChangeBlueChannel(5);   break;
 
-		ChangeRedChannel(picture);
-		ChangeGreenChannel(picture);
-		ChangeBlueChannel(picture);
-		cout << "Filtr gornoprzepustowy zostal wlaczony" << endl;
-		break;
+		case 'f': Filter::ChangeGamma(-0.02);     break;
+		case 'g': Filter::ChangeGamma(0.02);      break;
 
-	case '3':
-		mask[0] = 0;
-		mask[1] = -1;
-		mask[2] = 0;
-		mask[3] = -1;
-		mask[4] = 4;
-		mask[5] = -1;
-		mask[6] = 0;
-		mask[7] = -1;
-		mask[8] = 0;
+		case '+': Filter::ChangeBrightness(0.02); break;
+		case '-': Filter::ChangeBrightness(-0.02); break;
 
-		ChangeRedChannel(picture);
-		ChangeGreenChannel(picture);
-		ChangeBlueChannel(picture);
-		cout << "Filtr krawedziowy zostal wlaczony" << endl;
-		break;
+		case 'r': Filter::ClearFilters(picture);  break;
+
+		case 'e': exit(0);						  break;
+
+		case '1': highPass.Apply(picture);		  break;
+		case '2': lowPass.Apply(picture);		  break;
+		case '3': edge.Apply(picture);			  break;
 	}
 	Menu();
 }
@@ -187,7 +104,8 @@ void Idle()
 }
 
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) 
+{
 
 	// Initialize GLUT
 	glutInit(&argc, argv);

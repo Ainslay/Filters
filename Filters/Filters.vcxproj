@@ -151,13 +151,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\Filter.cpp" />
     <ClCompile Include="src\Picture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\zd3.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Filters.h" />
+    <ClInclude Include="src\Filter.h" />
     <ClInclude Include="src\Picture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

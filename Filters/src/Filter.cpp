@@ -1,13 +1,67 @@
-#pragma once
+#include "Filter.h"
 
-double brightness = 0.0;
-double red_filter = 0.0;
-double green_filter = 0.0;
-double blue_filter = 0.0;
-double gamma = 1.0;
-double mask[9] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+double Filter::brightness = 0.0;
+double Filter::red_filter = 0.0;
+double Filter::green_filter = 0.0;
+double Filter::blue_filter = 0.0;
+double Filter::gamma = 1.0;
 
-void ClearFilters(Picture& picture)
+Filter::Filter()
+	: mask({1,1,1,1,1,1,1,1,1})
+{ }
+
+Filter::Filter(std::vector<double> mask)
+	: mask(mask)
+{ }
+
+void Filter::Apply(Picture& picture)
+{
+	ChangeRedFilter(picture);
+	ChangeGreenFilter(picture);
+	ChangeBlueFilter(picture);
+}
+
+void Filter::ChangeRedChannel(const int& value)
+{
+	if (red_filter >= 0 && red_filter <= 255)
+		red_filter += value;
+	if (red_filter < 0) red_filter = 0;
+	if (red_filter > 255) red_filter = 255;
+}
+
+void Filter::ChangeGreenChannel(const int& value)
+{
+	if (green_filter >= 0 && green_filter <= 255)
+		green_filter += value;
+	if (green_filter < 0) green_filter = 0;
+	if (green_filter > 255) green_filter = 255;
+}
+
+void Filter::ChangeBlueChannel(const int& value)
+{
+	if (blue_filter >= 0 && blue_filter <= 255)
+		blue_filter += value;
+	if (blue_filter < 0) blue_filter = 0;
+	if (blue_filter > 255) blue_filter = 255;
+}
+
+void Filter::ChangeBrightness(const double& value)
+{
+	if (brightness >= -1.0 && brightness <= 1.0)
+		brightness += value;
+	if (brightness < -1.0) brightness = -1.0;
+	if (brightness > 1.0) brightness = 1.0;
+}
+
+void Filter::ChangeGamma(const double& value)
+{
+	if (gamma >= 0.0 && gamma <= 1.0)
+		gamma += value;
+	if (gamma < 0.0) gamma = 0.0;
+	if (gamma > 1.0) gamma = 1.0;
+}
+
+void Filter::ClearFilters(Picture& picture)
 {
 	auto freshPicture = Picture("res/zd3.txt");
 
@@ -28,7 +82,7 @@ void ClearFilters(Picture& picture)
 	gamma = 1.0;
 }
 
-void ChangeRedChannel(Picture& picture)
+void Filter::ChangeRedFilter(Picture& picture)
 {
 	double maskSum = 0;
 	int sum = 0;
@@ -45,20 +99,20 @@ void ChangeRedChannel(Picture& picture)
 			sum = mask[0] * picture.pointsColors[x - 1][y - 1].red + mask[1] * picture.pointsColors[x][y - 1].red + mask[2] * picture.pointsColors[x + 1][y - 1].red +
 				mask[3] * picture.pointsColors[x - 1][y].red + mask[4] * picture.pointsColors[x][y].red + mask[5] * picture.pointsColors[x + 1][y].red +
 				mask[6] * picture.pointsColors[x - 1][y + 1].red + mask[7] * picture.pointsColors[x][y + 1].red + mask[8] * picture.pointsColors[x + 1][y + 1].red;
-			
+
 			if (maskSum == 0)
 			{
 				picture.pointsColors[x][y].red = abs(sum);
 			}
 			else
 			{
-				picture.pointsColors[x][y].red = abs(sum/maskSum);
+				picture.pointsColors[x][y].red = abs(sum / maskSum);
 			}
 		}
 	}
 }
 
-void ChangeGreenChannel(Picture& picture)
+void Filter::ChangeGreenFilter(Picture& picture)
 {
 	double maskSum = 0;
 	int sum = 0;
@@ -88,7 +142,7 @@ void ChangeGreenChannel(Picture& picture)
 	}
 }
 
-void ChangeBlueChannel(Picture& picture)
+void Filter::ChangeBlueFilter(Picture& picture)
 {
 	double maskSum = 0;
 	int sum = 0;
