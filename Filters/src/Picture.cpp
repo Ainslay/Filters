@@ -7,11 +7,6 @@ Picture::Picture(std::string pictureDataFilePath)
 	LoadPictureData(pictureDataFilePath);
 }
 
-Picture::~Picture()
-{
-
-}
-
 void Picture::LoadPictureData(std::string pictureDataFilePath)
 {
 	fstream inputFile(pictureDataFilePath, ios::in);

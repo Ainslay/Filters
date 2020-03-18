@@ -1,2 +1,3 @@
 ﻿  Main.cpp
+F:\Studia\Grafika\Filters\Filters\src\StatisticalFilters.h(15,2): warning C4091: 'static ': ignored on left of 'StatisticalFilters' when no variable is declared
   Filters.vcxproj -> F:\Studia\Grafika\Filters\Debug\Filters.exe

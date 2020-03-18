@@ -25,7 +25,6 @@ public:
 
 	Picture() = delete;
 	Picture(string pictureDataFilePath);
-	~Picture();
 
 private:
 	void LoadPictureData(string pictureDataFilePath);

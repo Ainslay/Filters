@@ -1,5 +1,4 @@
 #pragma once
-
 #include <vector>
 #include "Picture.h"
 
@@ -24,7 +23,6 @@ public:
 	static void ChangeBlueChannel(const int& value);
 	static void ChangeBrightness(const double& value);
 	static void ChangeGamma(const double& value);
-
 
 private:
 	std::vector<double> mask;

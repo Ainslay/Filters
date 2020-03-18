@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\StatisticalFilters.cpp" />
     <ClCompile Include="src\Filter.cpp" />
     <ClCompile Include="src\Picture.cpp" />
   </ItemGroup>
@@ -158,6 +159,7 @@
     <Text Include="res\zd3.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\StatisticalFilters.h" />
     <ClInclude Include="src\Filter.h" />
     <ClInclude Include="src\Picture.h" />
   </ItemGroup>
